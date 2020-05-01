@@ -1,0 +1,35 @@
+:showtitle:
+:toc: left
+:icons: font
+
+= dap's vimrc
+
+== Managing packages
+
+Packages are managed using "Vanilla" Vim 8 packages.  They're just submodules in
+`./pack/plugins/start`.  To install a new one, clone it with something like
+this:
+
+    $ git submodule add https://github.com/rust-lang/rust.vim rust-lang-rust.vim
+
+Help tags have to be generated separately in order to search the help.  You can
+do this within vim with:
+
+    :helptags ~/.vim/pack/plugins/start/rust-lang-rust.vim/doc
+
+== TODO
+
+* Rust support
+** get code actions working
+** make a binding for LspHover
+** make a binding for RustFmt
+** integrate diagnostics better?
+** check docs for the above modules to see what I could be doing better
+* Make another edit pass over ~/.vimrc
+* Get better Markdown support
+* "solarized" color scheme
+* another prune pass over "ftdetect", "after"?
+* check out:
+** 'jclulow/vim-javascript'
+** 'ciaranm/securemodelines'
+** 'cespare/vim-toml'
