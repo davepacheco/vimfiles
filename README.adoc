@@ -23,6 +23,7 @@ do this within vim with:
 ** get code actions working
 ** make a binding for LspHover
 ** make a binding for RustFmt
+** make a binding for LspWorkspaceSymbol
 ** integrate diagnostics better?
 ** check docs for the above modules to see what I could be doing better
 * Make another edit pass over ~/.vimrc
