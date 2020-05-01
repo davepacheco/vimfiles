@@ -1,3 +1,15 @@
 [submodule "pack/plugins/start/rust.vim"]
-	path = pack/plugins/start/rust.vim
+	path = pack/plugins/start/rust-lang-rust.vim
 	url = https://github.com/rust-lang/rust.vim
+[submodule "pack/plugins/start/prabirshrestha-async.vim"]
+	path = pack/plugins/start/prabirshrestha-async.vim
+	url = https://github.com/prabirshrestha/async.vim
+[submodule "pack/plugins/start/prabirshrestha-vim-lsp"]
+	path = pack/plugins/start/prabirshrestha-vim-lsp
+	url = https://github.com/prabirshrestha/vim-lsp
+[submodule "pack/plugins/start/prabirshrestha-asyncomplete.vim"]
+	path = pack/plugins/start/prabirshrestha-asyncomplete.vim
+	url = https://github.com/prabirshrestha/asyncomplete.vim
+[submodule "pack/plugins/start/prabirshrestha-asyncomplete-lsp.vim"]
+	path = pack/plugins/start/prabirshrestha-asyncomplete-lsp.vim
+	url = https://github.com/prabirshrestha/asyncomplete-lsp.vim

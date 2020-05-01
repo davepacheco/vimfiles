@@ -137,3 +137,35 @@ endif
 " Override rustfmt to use the nightly build so that it doesn't barrel on
 " ignoring a bunch of the flags we've set.
 let g:rustfmt_command = "rustfmt +nightly"
+
+" rust.vim seems to override these settings that were set above.
+" TODO there's probably a better place to put these.
+autocmd BufEnter *.rs :set formatoptions-=l
+autocmd BufEnter *.rs :set textwidth=80
+" For Rust, remap my cscope binding to use LSP for definitions.
+autocmd BufEnter *.rs :nmap <C-\>s :LspReference<CR>
+autocmd BufEnter *.rs :nmap <C-\>g :LspDefinition<CR>
+" Disable automatic diagnostics while I'm typing.
+let g:lsp_diagnostics_enabled = 0
+" Don't autocomplete for every character I type.
+let g:asyncomplete_auto_popup = 0
+" Instead, autocomplete when I type <tab> after a non-whitespace
+" character.  This snippet comes from the "asyncomplete.vim" README.
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+inoremap <silent><expr> <TAB>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ asyncomplete#force_refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Configure the RLS server to use rust-analyzer.
+if executable('rust-analyzer-mac')
+  au User lsp_setup call lsp#register_server({
+      \ 'name': 'rust-analyzer',
+      \ 'cmd': {server_info->['rust-analyzer-mac']},
+      \ 'whitelist': ['rust'],
+      \ })
+endif
