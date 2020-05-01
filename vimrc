@@ -129,3 +129,11 @@ if has("cscope")
     nmap <C-@><C-@>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
 
 endif
+
+
+"
+" Rust settings
+"
+" Override rustfmt to use the nightly build so that it doesn't barrel on
+" ignoring a bunch of the flags we've set.
+let g:rustfmt_command = "rustfmt +nightly"
