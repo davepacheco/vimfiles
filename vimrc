@@ -145,6 +145,9 @@ autocmd BufEnter *.rs :set textwidth=80
 " For Rust, remap my cscope binding to use LSP for definitions.
 autocmd BufEnter *.rs :nmap <C-\>s :LspReference<CR>
 autocmd BufEnter *.rs :nmap <C-\>g :LspDefinition<CR>
+autocmd BufEnter *.rs :nmap <C-\>h :LspHover<CR>
+autocmd BufEnter *.rs :nmap <C-\>f :LspWorkspaceSymbol<CR>
+autocmd BufEnter *.rs :nmap <C-\>r :RustFmt<CR>
 " Disable automatic diagnostics while I'm typing.
 let g:lsp_diagnostics_enabled = 0
 " Don't autocomplete for every character I type.
