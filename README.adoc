@@ -28,6 +28,4 @@ do this within vim with:
 * "solarized" color scheme
 * another prune pass over "ftdetect", "after"?
 * check out:
-** 'jclulow/vim-javascript'
 ** 'ciaranm/securemodelines'
-** 'cespare/vim-toml'
