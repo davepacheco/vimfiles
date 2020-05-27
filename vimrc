@@ -130,6 +130,12 @@ if has("cscope")
 
 endif
 
+"
+" Asciidoc overrides
+" These came from the "Example ~/.vimrc File" in the "Asciidoc User Guide" at
+" https://www.methods.co.nz/asciidoc/.
+"
+autocmd BufEnter *.adoc :set formatoptions=tcqn formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
 
 "
 " Rust settings
