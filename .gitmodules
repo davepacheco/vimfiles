@@ -13,3 +13,6 @@
 [submodule "pack/plugins/start/prabirshrestha-asyncomplete-lsp.vim"]
 	path = pack/plugins/start/prabirshrestha-asyncomplete-lsp.vim
 	url = https://github.com/prabirshrestha/asyncomplete-lsp.vim
+[submodule "pack/plugins/start/vim-asciidoctor.git"]
+	path = pack/plugins/start/vim-asciidoctor.git
+	url = https://github.com/habamax/vim-asciidoctor.git
