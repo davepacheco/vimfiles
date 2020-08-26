@@ -136,6 +136,7 @@ endif
 " https://www.methods.co.nz/asciidoc/.
 "
 autocmd BufEnter *.adoc :set formatoptions=tcqn formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
+autocmd BufEnter *.adoc :set textwidth=0
 
 "
 " Rust settings
@@ -172,6 +173,7 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Configure the RLS server to use rust-analyzer.
 if executable('rust-analyzer-mac')
+  "let g:lsp_log_file=expand("~/.vim/vim-lsp.log")
   au User lsp_setup call lsp#register_server({
       \ 'name': 'rust-analyzer',
       \ 'cmd': {server_info->['rust-analyzer-mac']},
