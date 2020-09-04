@@ -172,11 +172,11 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Configure the RLS server to use rust-analyzer.
-if executable('rust-analyzer-mac')
+if executable('rust-analyzer')
   "let g:lsp_log_file=expand("~/.vim/vim-lsp.log")
   au User lsp_setup call lsp#register_server({
       \ 'name': 'rust-analyzer',
-      \ 'cmd': {server_info->['rust-analyzer-mac']},
+      \ 'cmd': {server_info->['rust-analyzer']},
       \ 'whitelist': ['rust'],
       \ })
 endif
