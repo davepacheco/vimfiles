@@ -141,9 +141,17 @@ autocmd BufEnter *.adoc :set textwidth=0
 "
 " Rust settings
 "
-" Override rustfmt to use the nightly build so that it doesn't barrel on
-" ignoring a bunch of the flags we've set.
-let g:rustfmt_command = "rustfmt +nightly"
+" In the past, I overrode rustfmt to use the nightly build so that it doesn't
+" barrel on ignoring a bunch of unstable flags that might be set.  This may
+" still be useful for Dropshot.
+"let g:rustfmt_command = "rustfmt +nightly --edition=2018"
+"let g:rustfmt_command = "cargo fmt --"
+"
+" In the past, we included `--edition` here, but a better solution is to put the
+" edition into rustfmt.toml for each crate.
+" We do specify `--color=never` because in some error cases it seems to spit out
+" color that makes it hard to see the actual error message.
+let g:rustfmt_command = "rustfmt --color=never"
 
 " rust.vim seems to override these settings that were set above.
 " TODO there's probably a better place to put these.
