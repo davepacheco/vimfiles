@@ -19,6 +19,6 @@
 [submodule "pack/plugins/start/vim-terraform"]
 	path = pack/plugins/start/vim-terraform
 	url = https://github.com/hashivim/vim-terraform.git
-[submodule "/Users/dap/.vim/pack/plugins/start/polar.vim"]
-	path = /Users/dap/.vim/pack/plugins/start/polar.vim
+[submodule "pack/plugins/start/polar.vim"]
+	path = pack/plugins/start/polar.vim
 	url = https://github.com/weihanglo/polar.vim
