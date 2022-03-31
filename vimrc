@@ -188,5 +188,14 @@ if executable('rust-analyzer')
       \ 'name': 'rust-analyzer',
       \ 'cmd': {server_info->['rust-analyzer']},
       \ 'whitelist': ['rust'],
+      \ 'initialization_options': {
+      \    'checkOnSave': {
+      \        'extraArgs': [ '--target-dir', 'target/rust-analyzer-dap' ]
+      \    },
+      \    'assist': {
+      \         'importGranularity': 'item',
+      \         'importGroup': v:false
+      \    },
+      \ },
       \ })
 endif
