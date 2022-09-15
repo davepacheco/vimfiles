@@ -167,6 +167,8 @@ autocmd BufEnter *.rs :nmap <C-\>r :RustFmt<CR>
 autocmd BufEnter *.rs :nmap <C-\>h :LspHover<CR>
 " Disable automatic diagnostics while I'm typing.
 let g:lsp_diagnostics_enabled = 0
+" Disable automatic highlights while I'm typing.
+let g:lsp_document_highlight_enabled = 0
 " Don't autocomplete for every character I type.
 let g:asyncomplete_auto_popup = 0
 " Instead, autocomplete when I type <tab> after a non-whitespace
@@ -198,4 +200,21 @@ if executable('rust-analyzer')
       \    },
       \ },
       \ })
+
+  " Have rust-analyzer reload the workspace.  This is often necessary after
+  " Cargo.toml updates, for example.  Copied from
+  " https://github.com/mattn/vim-lsp-settings.
+  function! s:reload_workspace() abort
+      call lsp#callbag#pipe(
+          \ lsp#request('rust-analyzer', {
+          \   'method': 'rust-analyzer/reloadWorkspace',
+          \ }),
+          \ lsp#callbag#subscribe({
+          \   'next': {x -> execute('echo "Cargo workspace reloaded"', '')},
+          \   'error': {e -> lsp_settings#utils#error(e)},
+          \ })
+          \ )
+  endfunction
+
+  command! -buffer LspCargoReload call <SID>reload_workspace()
 endif
