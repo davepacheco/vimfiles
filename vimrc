@@ -169,6 +169,8 @@ autocmd BufEnter *.rs :nmap <C-\>h :LspHover<CR>
 let g:lsp_diagnostics_enabled = 0
 " Disable automatic highlights while I'm typing.
 let g:lsp_document_highlight_enabled = 0
+" Disable the "sign" in the gutter that shows up when code actions are available
+let g:lsp_document_code_action_signs_enabled = 0
 " Don't autocomplete for every character I type.
 let g:asyncomplete_auto_popup = 0
 " Instead, autocomplete when I type <tab> after a non-whitespace
