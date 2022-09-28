@@ -187,7 +187,7 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Configure the RLS server to use rust-analyzer.
 if executable('rust-analyzer')
-  "let g:lsp_log_file=expand("~/.vim/vim-lsp.log")
+  let g:lsp_log_file=expand("~/.vim/vim-lsp.log")
   au User lsp_setup call lsp#register_server({
       \ 'name': 'rust-analyzer',
       \ 'cmd': {server_info->['rust-analyzer']},
@@ -218,5 +218,5 @@ if executable('rust-analyzer')
           \ )
   endfunction
 
-  command! -buffer LspCargoReload call <SID>reload_workspace()
+  command! LspCargoReload call <SID>reload_workspace()
 endif
