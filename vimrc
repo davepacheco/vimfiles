@@ -220,3 +220,9 @@ if executable('rust-analyzer')
 
   command! LspCargoReload call <SID>reload_workspace()
 endif
+
+" Go configuration
+autocmd BufEnter *.go :nmap <C-\>g :GoDef<CR>
+autocmd BufEnter *.go :nmap <C-\>h :GoInfo<CR>
+autocmd BufEnter *.go :nmap <C-\>c :GoCallers<CR>
+autocmd BufEnter *.go :nmap <C-\>s :GoReferrers<CR>
