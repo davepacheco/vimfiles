@@ -193,9 +193,13 @@ if executable('rust-analyzer')
       \ 'cmd': {server_info->['rust-analyzer']},
       \ 'whitelist': ['rust'],
       \ 'initialization_options': {
-      \    'checkOnSave': {
+      \    'check': {
       \        'extraArgs': [ '--target-dir', 'target/rust-analyzer-dap' ]
       \    },
+      \    'cargo': {
+      \        'extraArgs': [ '--target-dir', 'target/rust-analyzer-dap' ]
+      \    },
+      \    'procMacro': { 'enable': v:true, },
       \    'assist': {
       \         'importGranularity': 'item',
       \         'importGroup': v:false
