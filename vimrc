@@ -30,7 +30,7 @@ set backspace=indent,eol,start
 " Don't show me the begware screen.
 set shortmess=I
 
-# Try enabling the mouse for a while
+" Try enabling the mouse for a while
 set mouse=n
 
 "
