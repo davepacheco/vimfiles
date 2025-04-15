@@ -155,6 +155,9 @@ autocmd BufEnter *.adoc :set textwidth=0
 " We do specify `--color=never` because in some error cases it seems to spit out
 " color that makes it hard to see the actual error message.
 let g:rustfmt_command = "rustfmt --color=never"
+" For whatever reason, the plugin is not correctly determining whether to use
+" --write-mode=display or --emit=stdout
+let g:rustfmt_emit_files = 1
 
 " rust.vim seems to override these settings that were set above.
 " TODO there's probably a better place to put these.
