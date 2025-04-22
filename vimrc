@@ -31,7 +31,9 @@ set backspace=indent,eol,start
 set shortmess=I
 
 " Try enabling the mouse for a while
-set mouse=n
+" Edit: this was nice for being able to use the scroll wheel, but prevents
+" using double-click to select words.
+"set mouse=n
 
 "
 " NAVIGATION
