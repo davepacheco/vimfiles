@@ -230,6 +230,14 @@ if executable('rust-analyzer')
           \ )
   endfunction
 
+  " dap 2026-02-05: applying this somewhat blindly from
+  " https://github.com/prabirshrestha/vim-lsp/issues/871
+  call lsp#callbag#pipe(
+    \ lsp#stream(),
+    \ lsp#callbag#filter({x->has_key(x, 'response') && has_key(x['response'], 'method') && x['response']['method'] ==# 'window/logMessage'}),
+    \ lsp#callbag#forEach({x->lsp#utils#echo_with_truncation(x['response']['params']['message'])})
+    \ )
+
   command! LspCargoReload call <SID>reload_workspace()
 endif
 
