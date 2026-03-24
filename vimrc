@@ -201,9 +201,6 @@ if executable('rust-analyzer')
       \ 'cmd': {server_info->['rust-analyzer']},
       \ 'whitelist': ['rust'],
       \ 'initialization_options': {
-      \    'check': {
-      \        'extraArgs': [ '--target-dir', 'target/rust-analyzer-dap' ]
-      \    },
       \    'cargo': {
       \        'extraArgs': [ '--target-dir', 'target/rust-analyzer-dap' ]
       \    },
