@@ -166,6 +166,13 @@ autocmd BufEnter *.rs :nmap <C-\>f :LspWorkspaceSymbol<CR>
 autocmd BufEnter *.rs :nmap <C-\>a :LspCodeAction<CR>
 autocmd BufEnter *.rs :nmap <C-\>r :RustFmt<CR>
 autocmd BufEnter *.rs :nmap <C-\>h :LspHover<CR>
+autocmd BufEnter *.rs :nmap <C-\>? :call <SID>lsp_show_status()<CR>
+" Enable $/progress notifications from rust-analyzer.  vim-lsp only
+" declares window.workDoneProgress:true (needed for rust-analyzer to send
+" $/progress at all) when this is set.  We don't subscribe to
+" lsp_progress_updated, so the overhead is just vim-lsp's internal
+" bookkeeping with no downstream callbacks.
+let g:lsp_work_done_progress_enabled = 1
 " Disable automatic diagnostics while I'm typing.
 let g:lsp_diagnostics_enabled = 0
 " Disable automatic highlights while I'm typing.
@@ -233,6 +240,94 @@ if executable('rust-analyzer')
     \ )
 
   command! LspCargoReload call <SID>reload_workspace()
+
+  " Track rust-analyzer indexing progress and show it in the command line.
+  " g:lsp_work_done_progress_enabled (set above) is required for vim-lsp to
+  " declare window.workDoneProgress:true so that rust-analyzer sends $/progress
+  " at all.  We subscribe to the stream ourselves (like the window/logMessage
+  " handler above) so we can rate-limit 'report' events to at most one echo
+  " per second.  'begin' and 'end' events are rare and processed immediately.
+  let s:ra_progress_tokens    = {}
+  let s:ra_progress_info      = ''
+  let s:ra_progress_last_echo = -1
+
+  call lsp#callbag#pipe(
+      \ lsp#stream(),
+      \ lsp#callbag#filter({x ->
+      \     has_key(x, 'response') &&
+      \     get(x['response'], 'method', '') ==# '$/progress' &&
+      \     get(x, 'server', '') ==# 'rust-analyzer'}),
+      \ lsp#callbag#subscribe({'next': {x -> s:ra_on_progress(x)}})
+      \ )
+
+  function! s:ra_on_progress(data) abort
+      let l:params = a:data['response']['params']
+      let l:token  = string(l:params['token'])
+      let l:kind   = l:params['value']['kind']
+
+      if l:kind ==# 'begin'
+          let l:title = l:params['value']['title']
+          let s:ra_progress_tokens[l:token] = l:title
+          let s:ra_progress_info = '[rust-analyzer] ' . l:title
+          echomsg s:ra_progress_info
+          return
+      endif
+
+      if l:kind ==# 'end'
+          if has_key(s:ra_progress_tokens, l:token)
+              unlet s:ra_progress_tokens[l:token]
+          endif
+          if empty(s:ra_progress_tokens)
+              let s:ra_progress_info = ''
+              " If experimental/serverStatus quiescent:true hasn't arrived
+              " (rust-analyzer may not send it), fall back to declaring ready
+              " when all progress tokens have drained.  If another phase
+              " follows, its 'begin' will immediately overwrite this.
+              echomsg '[rust-analyzer] ready (probably)'
+          endif
+          return
+      endif
+
+      " kind == 'report': bail out early if we echoed within the last second.
+      let l:now = localtime()
+      if l:now == s:ra_progress_last_echo | return | endif
+      let s:ra_progress_last_echo = l:now
+
+      let l:title = get(s:ra_progress_tokens, l:token, '')
+      let l:msg = '[rust-analyzer]' . (empty(l:title) ? '' : ' ' . l:title)
+      let l:pct = get(l:params['value'], 'percentage', -1)
+      if l:pct >= 0
+          let l:msg .= ' (' . float2nr(l:pct + 0.5) . '%)'
+      endif
+      let s:ra_progress_info = l:msg
+      echomsg l:msg
+  endfunction
+
+  " Show the current rust-analyzer status on demand (bound to <C-\>?).
+  function! s:lsp_show_status() abort
+      let l:status = lsp#get_server_status('rust-analyzer')
+      if l:status ==# 'running'
+          if !empty(s:ra_progress_info)
+              echo s:ra_progress_info
+          elseif empty(s:ra_progress_tokens)
+              echo '[rust-analyzer] ready (probably)'
+          else
+              echo '[rust-analyzer] loading...'
+          endif
+      else
+          echo '[rust-analyzer] ' . l:status
+      endif
+  endfunction
+
+  augroup lsp_rust_progress
+      au!
+      autocmd User lsp_server_init
+          \ if lsp#get_server_status('rust-analyzer') ==# 'running' |
+          \     let s:ra_progress_tokens = {} |
+          \     let s:ra_progress_info = '' |
+          \     echomsg '[rust-analyzer] loading...' |
+          \ endif
+  augroup END
 endif
 
 " Go configuration
