@@ -62,6 +62,8 @@ set cinkeys=0{,0},:,0#,!0<Tab>,!^F
 " Indent continuation lines/lines with unclosed parens 4 spaces <+4,(4,u4,U1>
 " Don't indent case labels within a switch <:0>
 set cinoptions=p0,t0,+4,(4,u0,U1,:0
+" I don't want hard wraps in most files by default.
+set textwidth=0
 
 "
 " FILETYPES
@@ -72,7 +74,6 @@ set shiftwidth=8
 set tabstop=8
 set autoindent
 set formatoptions=tcroq
-set textwidth=80
 set number
 
 augroup Binary
@@ -141,7 +142,6 @@ endif
 " https://www.methods.co.nz/asciidoc/.
 "
 autocmd BufEnter *.adoc :set formatoptions=tcqn formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
-autocmd BufEnter *.adoc :set textwidth=0
 
 "
 " Rust settings
