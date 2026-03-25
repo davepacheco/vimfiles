@@ -195,7 +195,11 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Configure the RLS server to use rust-analyzer.
 if executable('rust-analyzer')
-  let g:lsp_log_file=expand("~/.vim/vim-lsp.log")
+  " The following line enables logging.  It's useful for debugging.  But
+  " when enabling detailed progress events from rust-analyzer, this causes
+  " vim to spend all its cycles writing log output for the whole period
+  " while rust-analyzer is loading.
+  " let g:lsp_log_file=expand("~/.vim/vim-lsp.log")
   au User lsp_setup call lsp#register_server({
       \ 'name': 'rust-analyzer',
       \ 'cmd': {server_info->['rust-analyzer']},
