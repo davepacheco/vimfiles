@@ -64,13 +64,6 @@ set cinkeys=0{,0},:,0#,!0<Tab>,!^F
 set cinoptions=p0,t0,+4,(4,u0,U1,:0
 " I don't want hard wraps in most files by default.
 set textwidth=0
-
-"
-" FILETYPES
-"
-" Default settings here.  The rest are in .vim/ftdetect and .vim/after.
-set noexpandtab
-set shiftwidth=8
 set tabstop=8
 set autoindent
 set formatoptions=tcroq
